@@ -129,9 +129,9 @@
             				<option value="text">Text</option>
             				<option value="textarea">Textarea</option>
             				<option value="select_box">Select Box</option>
-            				<option value="">--</option>
+<!--             				<option value="">--</option>
 
-            				<option value="alamat">Alamat</option>
+            				<option value="alamat">Alamat</option> -->
             			</select>
             		</div>
             	</div>
