@@ -23,7 +23,7 @@ function rebiovw_options_install() {
     $tbl_form_produk = $wpdb->prefix . "rebiovw_form_produk";
     $tbl_form_line = $wpdb->prefix . "rebiovw_form_line";
     $tbl_pesanan = $wpdb->prefix . "rebiovw_pesanan";
-    $tbl_region = $wpdb->prefix . "rebiovw_region";
+    // $tbl_region = $wpdb->prefix . "rebiovw_region";
 
     $sql = "
     	CREATE TABLE $tbl_line(
@@ -54,11 +54,6 @@ function rebiovw_options_install() {
                 PRIMARY KEY (`id`)
               ) ; 
 
-        CREATE TABLE IF NOT EXISTS $tbl_region (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-		  `nama` varchar(550) NOT NULL,
-		  PRIMARY KEY (`id`)
-		  );
 
 		ALTER TABLE $tbl_template CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
