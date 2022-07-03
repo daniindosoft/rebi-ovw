@@ -4,7 +4,10 @@
 // ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
     global $wpdb;
 	if (isset($_POST['addform'])) {
-         
+        // echo "<pre>";
+        // echo var_dump($_POST);
+        // echo "</pre>";
+        // die;
 		$tbl_form = $wpdb->prefix . "rebiovw_form";
 		$tbl_form_produk = $wpdb->prefix . "rebiovw_form_produk";
 		$tbl_form_line = $wpdb->prefix . "rebiovw_form_line";
@@ -29,13 +32,12 @@
     		$lebar = $_POST['lebar'];
  
             $for = $_POST['format'];
-
             for ($i=0; $i < count($title_elemen); $i++) { 
     			
     			$format = $for[$i];
     			
                 $elemen = $type_elemen[$i].' '.@$_POST['group'][$i];
-                // echo '<br>'.$format.' - '.$title_elemen[$i].' - '.$elemen.' - '. $format;
+                // echo '<br>insert into '.$tbl_form_line.' values ('.$lastid.', '.$title_elemen[$i].', '.$elemen.', - '. $lebar[$i].', '. $format.')';
     	        $wpdb->insert(
     	                $tbl_form_line,
     	                array(
@@ -47,13 +49,11 @@
     	                )
     	        );
             }
-
- 
-
+            // die;
             $message ="Form telah dibuat";
 	     } catch (\Exception $ex) {
                 echo $ex->getMessage();
-            }
+        }
 	}
 ?>
 <style>
@@ -98,7 +98,7 @@
             	<div class="col-lg-12">
             		<button class="btn-sm btn btn-info simple-form" type="button"><i class="dashicons dashicons-embed-generic"></i> Generate Form Sederhana</button>
             		<button class="btn-sm btn btn-info simple-form-2" type="button"><i class="fa fa-file-text"></i> Generate Form Detail</button>
-            		<button class="btn-sm btn btn-info" type="button"><i class="fas fa-tshirt"></i> Generate Form Detail & Multiple Produk</button>
+            		<!-- <button class="btn-sm btn btn-info" type="button"><i class="fas fa-tshirt"></i> Generate Form Detail & Multiple Produk</button> -->
 	            	<br>
 	            	<hr>
             	</div>
@@ -129,9 +129,7 @@
             				<option value="text">Text</option>
             				<option value="textarea">Textarea</option>
             				<option value="select_box">Select Box</option>
-<!--             				<option value="">--</option>
-
-            				<option value="alamat">Alamat</option> -->
+            				
             			</select>
             		</div>
             	</div>
@@ -143,7 +141,11 @@
             					$rowSelect = '';
                                 $rowSelects = '';
 	            				for ($i=1; $i <= 10; $i++) { 
-                					$rowSelects .= '<option value="col-'.$i.'">'.$i.' Kolom</option>';
+                                    $lebarFirst = "";
+                                    if ($i == 5) {
+                                        $lebarFirst = "selected";
+                                    }
+                					$rowSelects .= '<option selected value="col-'.$i.'">'.$i.' Kolom</option>';
 	            					$rowSelect = '<option value="col-'.$i.'">'.$i.' Kolom</option>';
 	            					echo $rowSelect;
 	            				}
@@ -151,7 +153,7 @@
             			</select>
             		</div>
             	</div>
-            	<div class="col-lg-1">
+            	<div class="col-lg-1 hide">
             		<label class="font-weight-bold">Group</label><br>
             		<input type="checkbox" class="checkbox" name="" value="false" data-id=1>
                     <input type="hidden" class="checkboxvalue1" name="group[]" value="false">
@@ -248,9 +250,7 @@
                             <option selected value="text">Text</option>
                             <option value="textarea">Textarea</option>
                             <option value="select_box">Select Box</option>
-                            <option value="">--</option>
-
-                            <option value="alamat">Alamat</option>
+                            
                         </select>
                     </div>
                 </div>
@@ -273,7 +273,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-1">
+                <div class="col-lg-1 hide">
                     <label class="font-weight-bold">Group</label><br>
                     <input type="checkbox" class="checkbox" name="" value="false" data-id="1">
                     <input type="hidden" class="checkboxvalue1" name="group[]" value="false">
@@ -303,9 +303,7 @@
                             <option selected value="text">Text</option>
                             <option value="textarea">Textarea</option>
                             <option value="select_box">Select Box</option>
-                            <option value="">--</option>
-
-                            <option value="alamat">Alamat</option>
+                            
                         </select>
                     </div>
                 </div>
@@ -327,7 +325,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-1">
+                <div class="col-lg-1 hide">
                     <label class="font-weight-bold">Group</label><br>
                     <input type="checkbox" class="checkbox" name="" value="false" data-id="2">
                     <input type="hidden" class="checkboxvalue2" name="group[]" value="false">
@@ -355,9 +353,7 @@
                             <option value="text">Text</option>
                             <option value="textarea">Textarea</option>
                             <option selected value="select_box">Select Box</option>
-                            <option value="">--</option>
-
-                            <option value="alamat">Alamat</option>
+                            
                         </select>
                     </div>
                 </div>
@@ -378,7 +374,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-1">
+                <div class="col-lg-1 hide">
                     <label class="font-weight-bold">Group</label><br>
                     <input type="checkbox" class="checkbox" name="" value="false" data-id="3">
                     <input type="hidden" class="checkboxvalue3" name="group[]" value="false">
@@ -406,9 +402,7 @@
                             <option value="text">Text</option>
                             <option value="textarea">Textarea</option>
                             <option value="select_box">Select Box</option>
-                            <option value="">--</option>
-
-                            <option selected value="alamat">Alamat</option>
+                            
                         </select>
                     </div>
                 </div>
@@ -429,7 +423,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-1">
+                <div class="col-lg-1 hide">
                     <label class="font-weight-bold">Group</label><br>
                     <input type="checkbox" class="checkbox" name="" value="false" data-id="4">
                     <input type="hidden" class="checkboxvalue4" name="group[]" value="false">
@@ -455,9 +449,7 @@
                             <option value="text">Text</option>
                             <option selected value="textarea">Textarea</option>
                             <option value="select_box">Select Box</option>
-                            <option value="">--</option>
-
-                            <option value="alamat">Alamat</option>
+                            
                         </select>
                     </div>
                 </div>
@@ -478,7 +470,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-1">
+                <div class="col-lg-1 hide">
                     <label class="font-weight-bold">Group</label><br>
                     <input type="checkbox" class="checkbox" name="" value="false" data-id="5">
                     <input type="hidden" class="checkboxvalue4" name="group[]" value="false">
@@ -510,9 +502,7 @@
             				<option selected value="text">Text</option>
             				<option value="textarea">Textarea</option>
             				<option value="select_box">Select Box</option>
-            				<option value="">--</option>
-
-            				<option value="alamat">Alamat</option>
+            			 
             			</select>
             		</div>
             	</div>
@@ -527,7 +517,7 @@
             		</div>
             	</div>
 
-            	<div class="col-lg-1">
+            	<div class="col-lg-1 hide">
             		<label class="font-weight-bold">Group</label><br> 
                     <input type="checkbox" class="checkbox" name="" value="false" data-id="1">
                     <input type="hidden" class="checkboxvalue1" name="group[]" value="false">
@@ -555,9 +545,7 @@
             				<option selected value="text">Text</option>
             				<option value="textarea">Textarea</option>
             				<option value="select_box">Select Box</option>
-            				<option value="">--</option>
-
-            				<option value="alamat">Alamat</option>
+            			 
             			</select>
             		</div>
             	</div>
@@ -572,7 +560,7 @@
             		</div>
             	</div>
 
-            	<div class="col-lg-1">
+            	<div class="col-lg-1 hide">
             		<label class="font-weight-bold">Group</label><br>
             		<input type="checkbox" class="checkbox" name="" value="false" data-id="2">
                     <input type="hidden" class="checkboxvalue2" name="group[]" value="false">
@@ -600,9 +588,7 @@
             				<option value="text">Text</option>
             				<option selected value="textarea">Textarea</option>
             				<option value="select_box">Select Box</option>
-            				<option value="">--</option>
-
-            				<option value="alamat">Alamat</option>
+            			 
             			</select>
             		</div>
             	</div>
@@ -616,7 +602,7 @@
             		</div>
             	</div>
 
-            	<div class="col-lg-1">
+            	<div class="col-lg-1 hide">
             		<label class="font-weight-bold">Group</label><br>
                     <input type="checkbox" class="checkbox" name="" value="false" data-id="3">
                     <input type="hidden" class="checkboxvalue3" name="group[]" value="false">
@@ -646,9 +632,7 @@
             				<option value="text">Text</option>
             				<option selected value="textarea">Textarea</option>
             				<option value="select_box">Select Box</option>
-            				<option value="">--</option>
-
-            				<option value="alamat">Alamat</option>
+            			
             			</select>
             		</div>
             	</div>
@@ -662,7 +646,7 @@
             		</div>
             	</div>
 
-            	<div class="col-lg-1">
+            	<div class="col-lg-1 hide">
             		<label class="font-weight-bold">Group</label><br>
             		 
                     <input type="checkbox" class="checkbox" name="" value="false" data-id="4">
@@ -710,9 +694,7 @@
             				<option value="text">Text</option>
             				<option value="textarea">Textarea</option>
             				<option value="select_box">Select Box</option>
-            				<option value="">--</option>
-
-            				<option value="alamat">Alamat</option>
+            				
             			</select>
             		</div>
             	</div>
@@ -727,7 +709,7 @@
             		</div>
             	</div>
 
-            	<div class="col-lg-1">
+            	<div class="col-lg-1 hide">
             		<label class="font-weight-bold">Group</label><br>
                     <input type="checkbox" class="checkbox" name="" value="false" data-id="`+numrow+`">
                     <input type="hidden" class="checkboxvalue`+numrow+`" name="group[]" value="false">

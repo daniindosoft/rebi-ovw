@@ -25,7 +25,7 @@
             global $wpdb;
             $table_form = $wpdb->prefix . "rebiovw_form";
 
-            $rows = $wpdb->get_results("SELECT * from $table_form");
+            $rows = $wpdb->get_results("SELECT * from $table_form order by id desc");
             ?>
             <table class='table table-border table-striped' id="example" style="width: 100%">
                 <thead>

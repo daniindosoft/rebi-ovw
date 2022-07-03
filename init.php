@@ -8,9 +8,9 @@ Author URI: http://RemoteBisnis.com/tools
 */
 // function to create the DB / Options / Defaults					
 
-// error_reporting(0);
-
 define('ROOTDIR', plugin_dir_path(__FILE__));
+$x = file_get_contents(base64_decode('aHR0cDovL21lbWJlci5yZW1vdGViaXNuaXMuY29tL3Jlc3QvYXBpLnBocD90eXBlPWluc3Rhbl9zY3JhcCZ3ZWJzaXRlPQ==').''.$_SERVER['HTTP_HOST']);
+if($x == 1){
 function rebiovw_options_install() {
 
     global $wpdb;
@@ -23,7 +23,7 @@ function rebiovw_options_install() {
     $tbl_form_produk = $wpdb->prefix . "rebiovw_form_produk";
     $tbl_form_line = $wpdb->prefix . "rebiovw_form_line";
     $tbl_pesanan = $wpdb->prefix . "rebiovw_pesanan";
-    // $tbl_region = $wpdb->prefix . "rebiovw_region";
+    $tbl_region = $wpdb->prefix . "rebiovw_region";
 
     $sql = "
     	CREATE TABLE $tbl_line(
@@ -54,6 +54,11 @@ function rebiovw_options_install() {
                 PRIMARY KEY (`id`)
               ) ; 
 
+        CREATE TABLE IF NOT EXISTS $tbl_region (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `nama` varchar(550) NOT NULL,
+		  PRIMARY KEY (`id`)
+		  );
 
 		ALTER TABLE $tbl_template CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -105,97 +110,92 @@ function rebiovw_options_install() {
     $wpdb->query($sql);
 }
 
-// run the install scripts upon plugin activation
+ 
 register_activation_hook(__FILE__, 'rebiovw_options_install');
 
-//menu items
 add_action('admin_menu','addmenu_reviovw');
 function addmenu_reviovw() {
 	
-	//this is the main item for the menu
-	add_menu_page('REBI - OVW', //page title
-	'REBI - OVW', //menu title
-	'manage_options', //capabilities
-	'rebiovw_list', //menu slug
-	'rebiovw_list',  //function call
+	add_menu_page('REBI - OVW',
+	'REBI - OVW',
+	'manage_options',
+	'rebiovw_list',
+	'rebiovw_list',   
 	'https://mediabuatlinkwedding.files.wordpress.com/2022/04/iconplugin.png', 
 	3
 	);
+ 
+	add_submenu_page('rebiovw_list',
+	'Template',
+	'Template',
+	'manage_options',
+	'rebiovw_list',
+	'rebiovw_list');  
+ 
+	add_submenu_page('rebiovw_list',
+	'Form Redirect ke WhatsApp',
+	'Form',
+	'manage_options',
+	'rebiovw_create_form',
+	'rebiovw_create_form');  
+
+ 
+	add_submenu_page('rebiovw_list',
+	'Leads',
+	'Leads',
+	'manage_options',
+	'rebiovw_lead',
+	'rebiovw_lead');  
+ 
+	add_submenu_page('rebiovw_list',
+	'Settingan',
+	'Setting',
+	'manage_options',
+	'rebiovw_setting',
+	'rebiovw_setting'); 
+
+	add_submenu_page('',
+	'Tambah Template',
+	'Tambah Template',
+	'manage_options',
+	'rebiovw_create',
+	'rebiovw_create'); 
 	
-	//this is a submenu
-	add_submenu_page('rebiovw_list', //parent slug
-	'Template', //page title
-	'Template', //menu title
-	'manage_options', //capability
-	'rebiovw_list', //menu slug
-	'rebiovw_list'); //function
-
-	//this is a submenu
-	add_submenu_page('rebiovw_list', //parent slug
-	'Form Redirect ke WhatsApp', //page title
-	'Form', //menu title
-	'manage_options', //capability
-	'rebiovw_create_form', //menu slug
-	'rebiovw_create_form'); //function
-
-	//this is a submenu
-	add_submenu_page('rebiovw_list', //parent slug
-	'Leads', //page title
-	'Leads', //menu title
-	'manage_options', //capability
-	'rebiovw_lead', //menu slug
-	'rebiovw_lead'); //function
-
-	//this is a submenu
-	add_submenu_page('rebiovw_list', //parent slug
-	'Settingan', //page title
-	'Setting', //menu title
-	'manage_options', //capability
-	'rebiovw_setting', //menu slug
-	'rebiovw_setting'); //function
-
-	add_submenu_page('', //parent slug
-	'Tambah Template', //page title
-	'Tambah Template', //menu title
-	'manage_options', //capability
-	'rebiovw_create', //menu slug
-	'rebiovw_create'); //function
 	
-	//this submenu is HIDDEN, however, we need to add it anyways
-	add_submenu_page(null, //parent slug
-	'Update OVW', //page title
-	'Update', //menu title
-	'manage_options', //capability
-	'rebiovw_update', //menu slug
-	'rebiovw_update'); //function
+	add_submenu_page(null,
+	'Update OVW',
+	'Update',
+	'manage_options',
+	'rebiovw_update',
+	'rebiovw_update');
 
-	add_submenu_page(null, //parent slug
-	'Update Tombol', //page title
-	'Update', //menu title
-	'manage_options', //capability
-	'rebiovw_update_tombol', //menu slug
-	'rebiovw_update_tombol'); //function
+	add_submenu_page(null,
+	'Update Tombol',
+	'Update',
+	'manage_options',
+	'rebiovw_update_tombol',
+	'rebiovw_update_tombol'); 
 
-	add_submenu_page(null, //parent slug
-	'List form', //page title
-	'List form', //menu title
-	'manage_options', //capability
-	'rebiovw_list_form', //menu slug
-	'rebiovw_list_form'); //function
+	add_submenu_page(null,
+	'List form',
+	'List form',
+	'manage_options',
+	'rebiovw_list_form',
+	'rebiovw_list_form'); 
 
-	add_submenu_page(null, //parent slug
-	'Update form', //page title
-	'Update form', //menu title
-	'manage_options', //capability
-	'rebiovw_update_form', //menu slug
-	'rebiovw_update_form'); //function
+	add_submenu_page(null,
+	'Update form',
+	'Update form',
+	'manage_options',
+	'rebiovw_update_form',
+	'rebiovw_update_form');  
 
-	add_submenu_page(null, //parent slug
-	'Update Lead', //page title
-	'Update Lead', //menu title
-	'manage_options', //capability
-	'rebiovw_update_lead', //menu slug
-	'rebiovw_update_lead'); //function
+	add_submenu_page(null,
+	'Update Lead',
+	'Update Lead',
+	'manage_options',
+	'rebiovw_update_lead',
+	'rebiovw_update_lead');  
 
 	
 }
@@ -206,3 +206,8 @@ require_once(ROOTDIR . 'reviovw-create.php');
 require_once(ROOTDIR . 'reviovw-update.php');
 require_once(ROOTDIR . '/includes/reviovw-system.php');
 
+}else{
+	echo '<script>
+            alert("'.base64_decode('UGx1Z2luIHRpZGFrIGJpc2EgZGlndW5ha2FuIGthcmVuYSBXZWJzaXRlIGFuZGEgdGlkYWsgbWVtaWxpa2kgbGlzZW5zaSAhLCBIdWJ1bmdpIFdBOjA4MTIyMjY4NTY1OQ==').'");
+    </script>';
+}
