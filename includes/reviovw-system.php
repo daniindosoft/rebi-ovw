@@ -1,5 +1,114 @@
 <?php
 
+function rebiovw_form_survey()
+{
+    
+    $CurPageURL = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];  
+?>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <div class="wrap">
+
+        <h4>Isi form berikut terlebih dahulu</h4>
+        
+        <div style="background-color: #f2f2f2;" class="p-2">
+            <form method="get" action="https://member.remotebisnis.com/rest/api.php" onsubmit="return confirm('Yakin data sudah benar ?')">
+                <input type="hidden" name="url" value="http://<?php echo $CurPageURL ?>">
+                <input type="hidden" name="type" value="formSubmit">
+                <input type="hidden" name="situs" value="<?php echo $_SERVER['HTTP_HOST'] ?>">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label class="font-weight-bold">Email</label>
+                        <input type="text" required class="form-control form-control-sm" name="email" value="">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="font-weight-bold">No Hp/WhatsApp</label>
+                        <input type="text" required class="form-control form-control-sm" name="nohp" value="">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="font-weight-bold">Domisili</label>
+                        <input type="text" required class="form-control form-control-sm" name="domisili" value="">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="font-weight-bold">usia</label>
+                        <select name="usia" id="" class="form-control">
+                            <option value="21-23">Rentang Usia Anda</option>
+                            <option value="18-22">18-22</option>
+                            <option value="23-26">23-26</option>
+                            <option value="27-29">27-29</option>
+                            <option value="30-34">30-34</option>
+                            <option value="35-40">35-40</option>
+                            <option value="> 40">&gt; 40</option>
+                      </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="font-weight-bold">Jenis Kelamin</label>
+                        <select name="jk" id="" class="form-control">
+                            <option value="L">L</option>
+                            <option value="P">P</option>
+                      </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="font-weight-bold">Kategori Bisnis</label>
+                        <select name="kategori_bisnis" class="form-control">
+                            <option value="Affiliate">Affiliate</option>
+                            <option value="Buku">Buku</option>
+                            <option value="Elektronik">Elektronik</option>
+                            <option value="Fashion Anak & Bayi">Fashion Anak & Bayi</option>
+                            <option value="Fashion Muslim">Fashion Muslim</option>
+                            <option value="Fashion Pria">Fashion Pria</option>
+                            <option value="Fashion Wanita">Fashion Wanita</option>
+                            <option value="Film & Musik">Film & Musik</option>
+                            <option value="Gaming">Gaming</option>
+                            <option value="Handphone & Tablet">Handphone & Tablet</option>
+                            <option value="Ibu & Bayi">Ibu & Bayi</option>
+                            <option value="Kamera">Kamera</option>
+                            <option value="Kecantikan">Kecantikan</option>
+                            <option value="Kesehatan">Kesehatan</option>
+                            <option value="Komputer & Laptop">Komputer & Laptop</option>
+                            <option value="Logam Mulia">Logam Mulia</option>
+                            <option value="Mainan & Hobi">Mainan & Hobi</option>
+                            <option value="Makanan & Minuman">Makanan & Minuman</option>
+                            <option value="Office & Stationery">Office & Stationery</option>
+                            <option value="Olahraga">Olahraga</option>
+                            <option value="Otomotif">Otomotif</option>
+                            <option value="Produk Digital / Ecourse / Tools">Produk Digital / Ecourse / Tools</option>
+                            <option value="Peralatan Dapur">Peralatan Dapur</option>
+                            <option value="Perawatan Hewan">Perawatan Hewan</option>
+                            <option value="Perawatan Tubuh">Perawatan Tubuh</option>
+                            <option value="Perlengkapan Pesta & Craft">Perlengkapan Pesta & Craft</option>
+                            <option value="Pertukangan">Pertukangan</option>
+                            <option value="Properti">Properti</option>
+                            <option value="Rumah Tangga">Rumah Tangga</option>
+                            <option value="Tour & Travel">Tour & Travel</option>
+
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="font-weight-bold">Deskripsi singkat bisnis Anda</label>
+                        <textarea class="w-100" name="deskripsi_bisnis"></textarea>
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="font-weight-bold">Public Figur yang memotivasi anda</label>
+                        <input type="text" required class="form-control form-control-sm" name="tokoh" value="">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="font-weight-bold">Adakah Tools lain yang kamu inginkan ?</label>
+                        <input type="text" required class="form-control form-control-sm" name="tools" value="">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="font-weight-bold">Apa kendalamu dalam berbisnis ?</label>
+                        <textarea class="w-100" name="kendala"></textarea>
+                    </div>
+                    <div class="col-lg-12">
+                        <br>
+                        <button class="btn btn-sm btn-primary btn-block">Kirim</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<?php
+}
 
 function rebiovw_include_icon(){
     echo '
