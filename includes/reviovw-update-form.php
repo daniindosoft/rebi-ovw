@@ -168,7 +168,7 @@
 	            			</select>
 	            		</div>
 	            	</div>
-	            	<div class="col-lg-1">
+	            	<div class="col-lg-1 hide">
                         
 	            		<label class="font-weight-bold">Group</label><br>
 	            		<input type="checkbox" class="checkbox" <?php if($elemen1 == 'true' ){ echo 'checked'; } ?> name="" value="false" data-id=<?php echo $loopElemen->id ?>>
@@ -288,7 +288,7 @@
             		</div>
             	</div>
 
-            	<div class="col-lg-1">
+            	<div class="col-lg-1 hide">
             		<label class="font-weight-bold">Group</label><br>
                     <input type="checkbox" class="checkbox" name="" value="false" data-id="`+numrow+`">
                     <input type="hidden" class="checkboxvalue`+numrow+`" name="group[]" value="false">

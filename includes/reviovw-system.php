@@ -312,28 +312,30 @@ function rebiovw_modal($hook, $text, $id, $style= '', $judul_formnya, $btn_text,
 
         <script>
         function rebiovw_sendwa(){
-            var rebiovwserialize = $("#rebiovw_sendwa_form input, #rebiovw_sendwa_form textarea, #rebiovw_sendwa_form select").serialize();
-            
-            var rebiovw_text = "'.$text_header.'%0A%0A";
-            var rebiovw_text_data = "";
-            var idform = "'.$id.'";
-            $.each(rebiovwserialize.split("&"), function (index, elem) {
-                 rebiovw_text += elem.replace("="," = ").split("x_x")[1]+"%0A";
-                 rebiovw_text_data += elem+"{}";
-            });
-            rebiovw_text += "%0A'.$text_footer.'";
-            $.ajax({
-                type: "POST",
-                url: "'.$url.'",
-                data: { 
-                    "action" : "rebiovw-pesanan",
-                    "data" : rebiovw_text_data,
-                    "id_form" : idform,
-                },
-                success: function(a) { 
-                    window.open("https://api.whatsapp.com/send?phone='.$nowa.'&text="+rebiovw_text,"_blank");
-                }
-            })
+            jQuery(function($) {
+                var rebiovwserialize = $("#rebiovw_sendwa_form input, #rebiovw_sendwa_form textarea, #rebiovw_sendwa_form select").serialize();
+                
+                var rebiovw_text = "'.$text_header.'%0A%0A";
+                var rebiovw_text_data = "";
+                var idform = "'.$id.'";
+                $.each(rebiovwserialize.split("&"), function (index, elem) {
+                     rebiovw_text += elem.replace("="," = ").split("x_x")[1]+"%0A";
+                     rebiovw_text_data += elem+"{}";
+                });
+                rebiovw_text += "%0A'.$text_footer.'";
+                $.ajax({
+                    type: "POST",
+                    url: "'.$url.'",
+                    data: { 
+                        "action" : "rebiovw-pesanan",
+                        "data" : rebiovw_text_data,
+                        "id_form" : idform,
+                    },
+                    success: function(a) { 
+                        window.open("https://api.whatsapp.com/send?phone='.$nowa.'&text="+rebiovw_text,"_blank");
+                    }
+                })
+                });
 
         }
         var '.$hook.'_modal = document.getElementById("myModal'.$hook.'");
