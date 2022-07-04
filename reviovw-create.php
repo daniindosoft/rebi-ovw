@@ -144,16 +144,22 @@
                     <div id="home" class="container tab-pane active p-0">
                         <br>
                         <div class="form-group">
-                            <label class="font-weight-bold">Terapkan ke produk :</label>
-                            
+                            <label class="font-weight-bold">Terapkan ke produk :</label><br>
+                            <small>
+                                <code>*</code>Produk hanya boleh memiliki 1 Template saja
+                            </small>
                             <br>
                             <select name="embeded[]" class="form-control ms" multiple="multiple">
                             <?php 
+                                $tblTemplateLine = $wpdb->prefix . "rebiovw_template_line";
+                                                                
                                 $loop = new WP_Query( array( 'post_type' => 'product') ); 
                                 while ( $loop->have_posts() ) : $loop->the_post();
+                                    $arrayTemplateLine = $wpdb->get_row("SELECT * from $tblTemplateLine where produk_id=".get_the_ID());
+                                    if(!$arrayTemplateLine){
                             ?>
                                 <option value="<?php echo get_the_ID() ?>"><?php echo get_the_title() ?></option>
-                            <?php endwhile; ?>
+                            <?php } endwhile; ?>
                             </select>
                         </div>
                     </div>

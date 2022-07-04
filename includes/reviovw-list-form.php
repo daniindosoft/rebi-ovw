@@ -45,7 +45,7 @@
                         </td>
                         <td class="manage-column ss-list-width">
                             <?php 
-                                echo strip_tags($row->header_pesan); 
+                                echo substr(strip_tags($row->header_pesan), 0, 75); 
                             ?>
                         </td>
                         
