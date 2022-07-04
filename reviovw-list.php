@@ -15,6 +15,32 @@ function rebiovw_list_form() {
 function rebiovw_create_form() {
     require_once(ROOTDIR . '/includes/reviovw-create-form.php');
 }
+function rebiovw_panduan(){
+?>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    
+    <link rel="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
+    <h3>Panduan - Dokumentasi</h3>
+    <div class="wrap">
+        <div class="row">
+            <div class="col-lg-12 text-small">
+                <iframe width="727" height="409" src="https://www.youtube.com/embed/a9DLcPCoB_4?list=PLllzUuyi4RvzVHyoA05Em1KfpvX3xfSbu" title="❌ BAHAYA 😫 PAYLATER, KREDIT, PINJAMAN ONLINE YANG TIDAK KAMU KETAHUI | By McDani Saputra" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="col-lg-12 text-small">
+                <br>
+                <b>Hal lainnya:</b>
+                <br>
+                <ul>
+                    <li><a href=""></a></li>
+                    <li>d</li>
+                    <li>d</li>
+                    <li>d</li>
+                </ul>
+            </div>
+        </div>  
+    </div>
+<?php
+}
 function rebiovw_update_tombol() {
     global $wpdb;
     $tbl_tombol = $wpdb->prefix . "rebiovw_tombol";
@@ -305,7 +331,7 @@ function rebiovw_list() {
         
     </style>
     <div class="wrap">
-        <h2>REBI - Order Produk Lewat Whatsapp</h2>
+        <h2>REBI - Order Via Whatsapp</h2>
         <div class="tablenav top">
             <div class="alignleft actions">
                 <a class="btn btn-sm btn-primary" href="<?php echo admin_url('admin.php?page=rebiovw_create'); ?>"><span class="dashicons dashicons-plus"></span> Tambah Template</a>
@@ -346,7 +372,7 @@ function rebiovw_list() {
                                     echo '<a href="#" class="btn btn-sm btn-warning">Form : '.$form->title.'</a>';
                                     
                                 }else{
-                                    echo strip_tags($row->des); 
+                                    echo substr(strip_tags($row->des), 0, 75); 
                                 }
                             ?>
                         </td>
