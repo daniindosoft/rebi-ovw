@@ -9,12 +9,10 @@
         $title = $_POST["title"];
         $des = $_POST["des"];
         $btn_text = $_POST['text_btn'];
-        // $exproduk = implode(':', $_POST['embeded']);
-        // $produk = $exproduk;
         $posisi = $_POST['posisi'];
 
         $wpdb->insert(
-                $table_name, //table
+                $table_name,
                 array(
                     'title' => $title, 
                     'des' => $des,
@@ -27,7 +25,7 @@
         $lastid = $wpdb->insert_id;
         for ($i=0; $i < count($_POST['embeded']); $i++) { 
             $wpdb->insert(
-                $table_line, //table
+                $table_line,  
                 array(
                     'id_template' => $lastid,
                     'produk_id' => $_POST['embeded'][$i]
@@ -197,7 +195,6 @@
 
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
-                <!-- Modal content-->
                 <div class="modal-content">
                                          
                     <div class="modal-body">

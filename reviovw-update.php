@@ -9,9 +9,7 @@
     $table_name = $wpdb->prefix . "rebiovw_template";
     $table_template_line = $wpdb->prefix . "rebiovw_template_line";
     $tbl_tombol = $wpdb->prefix . "rebiovw_tombol";
-    
-     
-//update
+ 
     if (isset($_POST['update'])) {
         $form = null;
         if ($_POST['event'] == 'f') {
@@ -46,7 +44,7 @@
     }else if (isset($_POST['delete'])) {
         $wpdb->query($wpdb->prepare("DELETE FROM $table_name WHERE id = %s", $id));
         $wpdb->query($wpdb->prepare("DELETE FROM $table_template_line WHERE id_template = %s", $id));
-    } else {//selecting value to update	
+    } else {
         $schools = $wpdb->get_results($wpdb->prepare("SELECT * from $table_name where id=%s", $id));
         foreach ($schools as $s) {
             $title = $s->title;
@@ -55,7 +53,7 @@
             $text_btn = $s->btn_text;
             $id_tombol = $s->id_tombol;
             $id_form = $s->id_form;
-            // $produk = explode(':',$s->produk_id);
+            
             $hideForm = '';
             $hideDes = 'hide';
 
