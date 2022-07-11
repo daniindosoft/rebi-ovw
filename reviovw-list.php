@@ -134,7 +134,7 @@ function rebiovw_setting() {
         $css = $_POST["css"]; 
 
         $wpdb->insert(
-                $table_name, //table
+                $table_name, 
                 array(
                     'nama_tombol' => $nama_tombol, 
                     'css' => $css
