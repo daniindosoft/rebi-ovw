@@ -16,6 +16,8 @@ function rebiovw_create_form() {
     require_once(ROOTDIR . '/includes/reviovw-create-form.php');
 }
 function rebiovw_panduan(){
+    $default_tab = null;
+    $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
 ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     
@@ -24,18 +26,39 @@ function rebiovw_panduan(){
     <div class="wrap">
         <div class="row">
             <div class="col-lg-12 text-small">
+                <hr>
+                <b>Vidio Demo :</b><br>
                 <iframe width="727" height="409" src="https://www.youtube.com/embed/a9DLcPCoB_4?list=PLllzUuyi4RvzVHyoA05Em1KfpvX3xfSbu" title="❌ BAHAYA 😫 PAYLATER, KREDIT, PINJAMAN ONLINE YANG TIDAK KAMU KETAHUI | By McDani Saputra" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="col-lg-12 text-small">
-                <br>
-                <b>Hal lainnya:</b>
-                <br>
-                <ul>
-                    <li><a href=""></a></li>
-                    <li>d</li>
-                    <li>d</li>
-                    <li>d</li>
-                </ul>
+                <div class="wrap">
+                    <b>Panduan Lengkap</b>
+                    <nav class="nav-tab-wrapper">
+                      <a href="?page=rebiovw_panduan" class="nav-tab <?php if($tab===null):?>nav-tab-active<?php endif; ?>">Template</a>
+                      <a href="?page=rebiovw_panduan&tab=form" class="nav-tab <?php if($tab==='form'):?>nav-tab-active<?php endif; ?>">Form</a>
+                      <a href="?page=rebiovw_panduan&tab=lead" class="nav-tab <?php if($tab==='lead'):?>nav-tab-active<?php endif; ?>">Lead</a>
+                      <a href="?page=rebiovw_panduan&tab=settings" class="nav-tab <?php if($tab==='settings'):?>nav-tab-active<?php endif; ?>">Settings</a>
+                    </nav>
+
+                    <div class="tab-content">
+                    <?php 
+
+                    switch($tab) :
+                      case 'settings':
+                            include_once(ROOTDIR.'template/setting.php');
+                        break;
+                      case 'lead':
+                            include_once(ROOTDIR.'template/lead.php');
+                        break;
+                      case 'form':
+                            include_once(ROOTDIR.'template/form.php');
+                        break;
+                      default:
+                            include_once(ROOTDIR.'template/template.php');
+                        break;
+                    endswitch; ?>
+                    </div>
+                  </div>
             </div>
         </div>  
     </div>
