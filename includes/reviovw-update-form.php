@@ -5,11 +5,11 @@
     global $wpdb;
 	$tbl_form = $wpdb->prefix . "rebiovw_form";
 	$tbl_form_line = $wpdb->prefix . "rebiovw_form_line";
-	$tbl_form_produk = $wpdb->prefix . "rebiovw_form_produk";
+	$tbl_pesanan = $wpdb->prefix . "rebiovw_pesanan";
 	if (isset($_POST['delete'])) {
         $wpdb->query($wpdb->prepare("DELETE FROM $tbl_form WHERE id = %s", $_GET['id']));
         $wpdb->query($wpdb->prepare("DELETE FROM $tbl_form_line WHERE id_form = %s", $_GET['id']));
-        $wpdb->query($wpdb->prepare("DELETE FROM $tbl_form_produk WHERE id_form = %s", $_GET['id']));
+        $wpdb->query($wpdb->prepare("DELETE FROM $tbl_pesanan WHERE id_form = %s", $_GET['id']));
         
         $message ="Form telah dihapus";
         header('location:'.admin_url('admin.php?page=rebiovw_list_form&id='.$id).'&msg='.$message);
@@ -101,7 +101,7 @@
     <br>
     <?php if (isset($message)): ?><div class="updated"><p><?php echo $message; ?></p></div><?php endif; ?>
     <div style="background-color: #f2f2f2;" class="p-2">
-        <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>" onsubmit="return confirm('Yakin untuk melanjutkan proses ?')">
+        <!-- <form method="post" action=" $_SERVER['REQUEST_URI']; ?>" onsubmit="return confirm('Yakin untuk melanjutkan proses ?')"> -->
         	<div class="row">
             	 
             	<div class="col-lg-6">
@@ -115,7 +115,9 @@
         	</div>
             <div class="row add-element">
             	<?php 
+            		$no = 1;
                     foreach ($wpdb->get_results("SELECT * from $tbl_form_line where id_form=".$_GET['id']) as $loopElemen): 
+            		$no++;
                         
                         $elemen1 = explode(' ',$loopElemen->type_elemen)[1];
                         $elemen0 = explode(' ',$loopElemen->type_elemen)[0];
@@ -134,13 +136,11 @@
                         <input type="hidden" value="<?php echo $loopElemen->id ?>" name="id_form_line[]">
 	            		<div class="form-group">
 	            			<label class="font-weight-bold">Type <?php echo $elemen0 ?></label>
-	            			<select name="type_elemen[]" class="form-control form-control-sm selectbox" data-id=1>
+	            			<select name="type_elemen[]" class="form-control form-control-sm selectbox" data-id='<?php echo $no ?>'>
 	            				<option <?php if($elemen0 == 'text'){ echo 'disabled selected '; } ?> value="text">Text</option>
 	            				<option <?php if($elemen0 == 'textarea'){ echo 'disabled selected'; } ?> value="textarea">Textarea</option>
 	            				<option <?php if($elemen0 == 'select_box'){ echo 'disabled selected '; } ?> value="select_box">Select Box</option>
-	            				<option value="">--</option>
-
-	            				<option value="alamat">Alamat</option>
+	            				
 	            			</select>
 
 
@@ -174,7 +174,7 @@
 	            		<input type="checkbox" class="checkbox" <?php if($elemen1 == 'true' ){ echo 'checked'; } ?> name="" value="false" data-id=<?php echo $loopElemen->id ?>>
 	                    <input type="hidden" class="checkboxvalue<?php echo $loopElemen->id ?>" name="group[]" value="<?= $elemen1 ?>">
 	            	</div>
-	            	<div class="col-lg-4 placement1">
+	            	<div class="col-lg-4 placement<?php echo $no ?>">
                         <?php if ($elemen0 == 'select_box'): ?>
                             <label class="font-weight-bold">Masukan List sesuai format</label><br>
                             <textarea name="format[]" class="form-control-sm form-control" rows="8"><?php echo $loopElemen->format ?></textarea>
@@ -193,34 +193,16 @@
             		<label class="font-weight-bold">Footer Pesan</label>
             		<textarea id="footer_pesan" name="footer_pesan" class="form-control form-control-sm" id="" rows="6"><?php echo $data->footer_pesan ?></textarea>
             	</div>
-            	<div class="col-lg-12">
-            		<label class="font-weight-bold">Diterapkan di produk</label><br>
-            		<select name="produk[]" class="form-control ms" multiple="multiple">
-                    <?php 
-                        $loop = new WP_Query( array( 'post_type' => 'product') ); 
-                        while ( $loop->have_posts() ) : $loop->the_post();
-                            $selected = '';
-
-                            $produkQuery = $wpdb->get_results($wpdb->prepare("SELECT * from $tbl_form_produk where id_form=%s", $_GET['id']));
-                            print_r($produkQuery);
-                            foreach ($produkQuery as $produkShow) {
-                                if ($produkShow->produk_id == get_the_ID()) {
-                                    $selected = 'selected'; 
-                                }    
-                            }
-                    ?>
-                        <option <?php echo $selected; ?> value="<?php echo get_the_ID() ?>"><?php echo get_the_title() ?></option>
-                    <?php endwhile; ?>
-                    </select>
-            	</div>
+            	 
             	 
             	<div class="col-lg-12">
             		<hr>
-            		<button name="addform" class="btn btn-success btn-sm" type="submit"><i class="dashicons dashicons-saved"></i> Simpan</button>
-                    <button name="delete" class="btn btn-danger btn-sm" type="submit"><i class="dashicons dashicons-trash"></i> Hapus Form ini</button>
+            		<!-- <button name="addform" class="btn btn-success btn-sm" type="submit"><i class="dashicons dashicons-saved"></i> Simpan</button> -->
+                    <button name="delete" onclick="return confirm('Pesanan atau lead yang terkait dengan form ini akan hilang juga, yakin untuk menghapus Form ini ?')" class="btn btn-danger btn-sm" type="submit"><i class="dashicons dashicons-trash"></i> Hapus Form ini</button>
+                    <br>
             	</div>
             </div>
-        </form>
+        <!-- </form> -->
     </div>
 </div>
 <script>
@@ -239,6 +221,7 @@
 			$('.numid'+$(this).data('id')).remove();
 		});
 		$(document).on("change", ".selectbox" , function() {
+			
     		var param = $(this).val();
 			var id = $(this).data('id');
     		if (param == 'select_box') {
@@ -271,9 +254,7 @@
             				<option value="text">Text</option>
             				<option value="textarea">Textarea</option>
             				<option value="select_box">Select Box</option>
-            				<option value="">--</option>
-
-            				<option value="alamat">Alamat</option>
+            				
             			</select>
             		</div>
             	</div>

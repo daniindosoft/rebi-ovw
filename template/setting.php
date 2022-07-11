@@ -1,3 +1,4 @@
+<br>
 <h4>Penjelasan Menu : Settings</h4>
 <p>
 	Halaman ini memiliki 2 fungsi yaitu menambahkan Style Tombol dan menambahkan nomor whatsapp

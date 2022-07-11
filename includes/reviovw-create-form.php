@@ -3,18 +3,18 @@
 <?php
 // ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
     global $wpdb;
-	if (isset($_POST['addform'])) {
+    if (isset($_POST['addform'])) {
         // echo "<pre>";
         // echo var_dump($_POST);
         // echo "</pre>";
         // die;
-		$tbl_form = $wpdb->prefix . "rebiovw_form";
-		$tbl_form_produk = $wpdb->prefix . "rebiovw_form_produk";
-		$tbl_form_line = $wpdb->prefix . "rebiovw_form_line";
+        $tbl_form = $wpdb->prefix . "rebiovw_form";
+        $tbl_form_produk = $wpdb->prefix . "rebiovw_form_produk";
+        $tbl_form_line = $wpdb->prefix . "rebiovw_form_line";
 
-		$title = $_POST['title'];
-		$hp = $_POST['header_pesan'];
-		$fp = $_POST['footer_pesan'];
+        $title = $_POST['title'];
+        $hp = $_POST['header_pesan'];
+        $fp = $_POST['footer_pesan'];
 
         try{
             $wpdb->insert(
@@ -26,35 +26,35 @@
                     )
             );
             $lastid = $wpdb->insert_id;
-    		
-    		$title_elemen = $_POST['judul_elemen'];
-    		$type_elemen = $_POST['type_elemen'];
-    		$lebar = $_POST['lebar'];
+            
+            $title_elemen = $_POST['judul_elemen'];
+            $type_elemen = $_POST['type_elemen'];
+            $lebar = $_POST['lebar'];
  
             $for = $_POST['format'];
             for ($i=0; $i < count($title_elemen); $i++) { 
-    			
-    			$format = $for[$i];
-    			
+                
+                $format = $for[$i];
+                
                 $elemen = $type_elemen[$i].' '.@$_POST['group'][$i];
-                // echo '<br>insert into '.$tbl_form_line.' values ('.$lastid.', '.$title_elemen[$i].', '.$elemen.', - '. $lebar[$i].', '. $format.')';
-    	        $wpdb->insert(
-    	                $tbl_form_line,
-    	                array(
-    	                    'id_form' => $lastid,
-    	                    'judul_elemen' => $title_elemen[$i],
-    	                    'type_elemen' => $elemen,
-    	                    'lebar' => $lebar[$i],
-    	                    'format' => $format
-    	                )
-    	        );
+                // echo '<br>insert into '.$tbl_form_line.' values ('.$lastid.', "'.$title_elemen[$i].'", "'.$elemen.'","'.$lebar[$i].'", "'. $format.'");';
+                $wpdb->insert(
+                        $tbl_form_line,
+                        array(
+                            'id_form' => $lastid,
+                            'judul_elemen' => $title_elemen[$i],
+                            'type_elemen' => $elemen,
+                            'lebar' => $lebar[$i],
+                            'format' => $format
+                        )
+                );
             }
             // die;
             $message ="Form telah dibuat";
-	     } catch (\Exception $ex) {
+         } catch (\Exception $ex) {
                 echo $ex->getMessage();
         }
-	}
+    }
 ?>
 <style>
     <?php require_once(ROOTDIR . 'style-admin.css'); ?>
@@ -74,13 +74,13 @@
 <div class="wrap">
 
     <div class="row">
-    	<div class="col-lg-9">
-    		<h3>Buat Form</h3>
-    	</div>
-    	<div class="col-lg-3 text-right">
-	    	<a href="">Lihat Plugin Lainnya</a>
-    	</div>
-	</div>
+        <div class="col-lg-9">
+            <h3>Buat Form</h3>
+        </div>
+        <div class="col-lg-3 text-right">
+            <a href="">Lihat Plugin Lainnya</a>
+        </div>
+    </div>
     <div class="tablenav top">
         <div class="alignleft actions">
             <a class="btn btn-sm btn-primary" href="<?php echo admin_url('admin.php?page=rebiovw_list'); ?>"><span class="dashicons dashicons-arrow-left-alt"></span> List Template</a>
@@ -94,90 +94,90 @@
     <?php if (isset($message)): ?><div class="updated"><p><?php echo $message; ?></p></div><?php endif; ?>
     <div style="background-color: #f2f2f2;" class="p-2">
         <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>" onsubmit="return confirm('Yakin form akan di simpan ?')">
-        	<div class="row">
-            	<div class="col-lg-12">
-            		<button class="btn-sm btn btn-info simple-form" type="button"><i class="dashicons dashicons-embed-generic"></i> Generate Form Sederhana</button>
-            		<button class="btn-sm btn btn-info simple-form-2" type="button"><i class="fa fa-file-text"></i> Generate Form Detail</button>
-            		<!-- <button class="btn-sm btn btn-info" type="button"><i class="fas fa-tshirt"></i> Generate Form Detail & Multiple Produk</button> -->
-	            	<br>
-	            	<hr>
-            	</div>
-            	<div class="col-lg-6">
-            		<label class="font-weight-bold">Judul Form</label>
-            		<input type="text" id="judul_form" class="form-control form-control-sm" name="title">
-            		<label class="font-weight-bold">Header Pesan</label>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button class="btn-sm btn btn-info simple-form" type="button"><i class="dashicons dashicons-embed-generic"></i> Generate Form Sederhana</button>
+                    <button class="btn-sm btn btn-info simple-form-2" type="button"><i class="fa fa-file-text"></i> Generate Form Detail</button>
+                    <!-- <button class="btn-sm btn btn-info" type="button"><i class="fas fa-tshirt"></i> Generate Form Detail & Multiple Produk</button> -->
+                    <br>
+                    <hr>
+                </div>
+                <div class="col-lg-6">
+                    <label class="font-weight-bold">Judul Form</label>
+                    <input type="text" id="judul_form" class="form-control form-control-sm" name="title">
+                    <label class="font-weight-bold">Header Pesan</label>
                     <br><small>Lihat Shortcode <a href="#kamus" data-toggle="modal" data-target="#myModal">Disini..</a></small>
-            		<textarea name="header_pesan" id="header_pesan" class="form-control form-control-sm" id="" rows="6"></textarea>
-            	</div>
-            	
+                    <textarea name="header_pesan" id="header_pesan" class="form-control form-control-sm" id="" rows="6"></textarea>
+                </div>
+                
 
-        	</div>
+            </div>
             <div class="row add-element">
-            	<div class="col-lg-12">
-            		<hr>
-            	</div>
-            	<div class="col-lg-3 param-elemen">
-            		<div class="form-group">
-            			<label class="font-weight-bold">Judul elemen</label>
-            			<input type="text" class="disabled1 form-control form-control-sm" name="judul_elemen[]">
-            		</div>
-            	</div>
-            	<div class="col-lg-2">
-            		<div class="form-group">
-            			<label class="font-weight-bold">Type</label>
-            			<select name="type_elemen[]" class="form-control form-control-sm selectbox" data-id=1>
-            				<option value="text">Text</option>
-            				<option value="textarea">Textarea</option>
-            				<option value="select_box">Select Box</option>
-            				
-            			</select>
-            		</div>
-            	</div>
-            	<div class="col-lg-2">
-            		<div class="form-group">
-            			<label class="font-weight-bold">Lebar kolom</label>
-            			<select name="lebar[]" class="form-control form-control-sm disabled1 ">
-            				<?php 
-            					$rowSelect = '';
+                <div class="col-lg-12">
+                    <hr>
+                </div>
+                <div class="col-lg-3 param-elemen">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Judul elemen</label>
+                        <input type="text" class="disabled1 form-control form-control-sm" name="judul_elemen[]">
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Type</label>
+                        <select name="type_elemen[]" class="form-control form-control-sm selectbox" data-id=1>
+                            <option value="text">Text</option>
+                            <option value="textarea">Textarea</option>
+                            <option value="select_box">Select Box</option>
+                            
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Lebar kolom</label>
+                        <select name="lebar[]" class="form-control form-control-sm disabled1 ">
+                            <?php 
+                                $rowSelect = '';
                                 $rowSelects = '';
-	            				for ($i=1; $i <= 10; $i++) { 
+                                for ($i=1; $i <= 10; $i++) { 
                                     $lebarFirst = "";
                                     if ($i == 5) {
                                         $lebarFirst = "selected";
                                     }
-                					$rowSelects .= '<option selected value="col-'.$i.'">'.$i.' Kolom</option>';
-	            					$rowSelect = '<option value="col-'.$i.'">'.$i.' Kolom</option>';
-	            					echo $rowSelect;
-	            				}
-            				?>
-            			</select>
-            		</div>
-            	</div>
-            	<div class="col-lg-1 hide">
-            		<label class="font-weight-bold">Group</label><br>
-            		<input type="checkbox" class="checkbox" name="" value="false" data-id=1>
+                                    $rowSelects .= '<option selected value="col-'.$i.'">'.$i.' Kolom</option>';
+                                    $rowSelect = '<option value="col-'.$i.'">'.$i.' Kolom</option>';
+                                    echo $rowSelect;
+                                }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-1 hide">
+                    <label class="font-weight-bold">Group</label><br>
+                    <input type="checkbox" class="checkbox" name="" value="false" data-id=1>
                     <input type="hidden" class="checkboxvalue1" name="group[]" value="false">
-            	</div>
-            	<div class="col-lg-4 placement1">
+                </div>
+                <div class="col-lg-4 placement1">
                     <input type="hidden" name="format[]">
-            	</div>
+                </div>
             </div>
             <div class="row">
-            	<div class="col-lg-12">
-            		<button id="addrow" class="btn btn-warning btn-sm" type="button"><i class="dashicons dashicons-plus"></i> Tambah Elemen</button>
-            	</div>
-            	<div class="col-lg-12">
-            		<hr>
-            		<label class="font-weight-bold">Footer Pesan</label>
+                <div class="col-lg-12">
+                    <button id="addrow" class="btn btn-warning btn-sm" type="button"><i class="dashicons dashicons-plus"></i> Tambah Elemen</button>
+                </div>
+                <div class="col-lg-12">
+                    <hr>
+                    <label class="font-weight-bold">Footer Pesan</label>
                     <br><small>Lihat Shortcode <a href="#kamus" data-toggle="modal" data-target="#myModal">Disini..</a></small>
-            		<textarea id="footer_pesan" name="footer_pesan" class="form-control form-control-sm" id="" rows="6"></textarea>
-            	</div>
-            	
-            	 
-            	<div class="col-lg-12">
-            		<hr>
-            		<button name="addform" class="btn-block btn btn-success btn-sm" type="submit"><i class="dashicons dashicons-saved"></i> Simpan</button>
-            	</div>
+                    <textarea id="footer_pesan" name="footer_pesan" class="form-control form-control-sm" id="" rows="6"></textarea>
+                </div>
+                
+                 
+                <div class="col-lg-12">
+                    <hr>
+                    <button name="addform" class="btn-block btn btn-success btn-sm" type="submit"><i class="dashicons dashicons-saved"></i> Simpan</button>
+                </div>
             </div>
         </form>
     </div>
@@ -219,16 +219,16 @@
 </div>
 <script>
     $(document).ready(function() {
-		$(document).on("click", ".checkbox" , function() {
-			if ($(this).is(':checked')) {
-				$(this).attr('value', 'true');
+        $(document).on("click", ".checkbox" , function() {
+            if ($(this).is(':checked')) {
+                $(this).attr('value', 'true');
                 $('.checkboxvalue'+$(this).data('id')).val('true');
-			} else {
-				$(this).attr('value', 'false');
+            } else {
+                $(this).attr('value', 'false');
                 $('.checkboxvalue'+$(this).data('id')).val('false');
-			}
-		});
-		$(document).on("click", ".simple-form-2" , function() {
+            }
+        });
+        $(document).on("click", ".simple-form-2" , function() {
             $('#judul_form').val('Form Pesanan');
             $('#header_pesan').val('Hallo kak, saya mau pesan kaos |NP|, berikut detail alamatnya');
             $('#footer_pesan').val('Ongkirnya berapa ya kak?&#10; Terima kasih');
@@ -481,244 +481,244 @@
 
         });
         $(document).on("click", ".simple-form" , function() {
-			$('#judul_form').val('Form Pesanan');
-			$('#header_pesan').val('Hallo kak, saya mau pesan |NP|, berikut detail alamatnya');
-			$('#footer_pesan').val('Terima kasih');
-			$('.add-element').html(`
-				 
-            	<div class="col-lg-12">
-            		<hr>
-            	</div>
-            	<div class="col-lg-3 param-elemen">
-            		<div class="form-group">
-            			<label class="font-weight-bold">Judul elemen</label>
-            			<input type="text" class="disabled1 form-control form-control-sm" name="judul_elemen[]" value="Nama Anda">
-            		</div>
-            	</div>
-            	<div class="col-lg-2">
-            		<div class="form-group">
-            			<label class="font-weight-bold">Type</label>
-            			<select name="type_elemen[]" class="form-control form-control-sm selectbox" data-id="1">
-            				<option selected value="text">Text</option>
-            				<option value="textarea">Textarea</option>
-            				<option value="select_box">Select Box</option>
-            			 
-            			</select>
-            		</div>
-            	</div>
-            	<div class="col-lg-2">
-            		<div class="form-group">
-            			<label class="font-weight-bold">Lebar</label>
-            			<select name="lebar[]" class="form-control form-control-sm disabled1 ">
-            				<?php 
+            $('#judul_form').val('Form Pesanan');
+            $('#header_pesan').val('Hallo kak, saya mau pesan |NP|, berikut detail alamatnya');
+            $('#footer_pesan').val('Terima kasih');
+            $('.add-element').html(`
+                 
+                <div class="col-lg-12">
+                    <hr>
+                </div>
+                <div class="col-lg-3 param-elemen">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Judul elemen</label>
+                        <input type="text" class="disabled1 form-control form-control-sm" name="judul_elemen[]" value="Nama Anda">
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Type</label>
+                        <select name="type_elemen[]" class="form-control form-control-sm selectbox" data-id="1">
+                            <option selected value="text">Text</option>
+                            <option value="textarea">Textarea</option>
+                            <option value="select_box">Select Box</option>
+                         
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Lebar</label>
+                        <select name="lebar[]" class="form-control form-control-sm disabled1 ">
+                            <?php 
                                 echo $rowSelects;
                             ?>
-            			</select>
-            		</div>
-            	</div>
+                        </select>
+                    </div>
+                </div>
 
-            	<div class="col-lg-1 hide">
-            		<label class="font-weight-bold">Group</label><br> 
+                <div class="col-lg-1 hide">
+                    <label class="font-weight-bold">Group</label><br> 
                     <input type="checkbox" class="checkbox" name="" value="false" data-id="1">
                     <input type="hidden" class="checkboxvalue1" name="group[]" value="false">
-            	</div>
-            	<div class="col-lg-4 placement1"><input type="hidden" name="format[]"></div>
+                </div>
+                <div class="col-lg-4 placement1"><input type="hidden" name="format[]"></div>
             
-	    		<div class="col-lg-12 numid2">
-            		<hr>
-            	</div>
-            	<div class="col-lg-3 numid2">
-            		<div class="form-group param-elemen">
-            			<label class="font-weight-bold">Judul elemen</label>
-            			<div class="input-group">
-							<div class="input-group-prepend">
-								<button type="button" data-id="2" class="delete btn btn-danger btn-sm">X</button>
-							</div>
-	            			<input type="text" class="disabled2 form-control form-control-sm" name="judul_elemen[]" value="Nomor WhatsApp">
-						</div>
-            		</div>
-            	</div>
-            	<div class="col-lg-2 numid2">
-            		<div class="form-group">
-            			<label class="font-weight-bold">Type</label>
-            			<select name="type_elemen[]" class="form-control form-control-sm selectbox" data-id="2">
-            				<option selected value="text">Text</option>
-            				<option value="textarea">Textarea</option>
-            				<option value="select_box">Select Box</option>
-            			 
-            			</select>
-            		</div>
-            	</div>
-            	<div class="col-lg-2 numid2">
-            		<div class="form-group">
-            			<label class="font-weight-bold">Lebar</label>
-            			<select name="lebar[]" class="form-control form-control-sm disabled2 " >
-            				<?php 
+                <div class="col-lg-12 numid2">
+                    <hr>
+                </div>
+                <div class="col-lg-3 numid2">
+                    <div class="form-group param-elemen">
+                        <label class="font-weight-bold">Judul elemen</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button type="button" data-id="2" class="delete btn btn-danger btn-sm">X</button>
+                            </div>
+                            <input type="text" class="disabled2 form-control form-control-sm" name="judul_elemen[]" value="Nomor WhatsApp">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 numid2">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Type</label>
+                        <select name="type_elemen[]" class="form-control form-control-sm selectbox" data-id="2">
+                            <option selected value="text">Text</option>
+                            <option value="textarea">Textarea</option>
+                            <option value="select_box">Select Box</option>
+                         
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2 numid2">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Lebar</label>
+                        <select name="lebar[]" class="form-control form-control-sm disabled2 " >
+                            <?php 
                                 echo $rowSelects;
                             ?>
                         </select>
-            		</div>
-            	</div>
+                    </div>
+                </div>
 
-            	<div class="col-lg-1 hide">
-            		<label class="font-weight-bold">Group</label><br>
-            		<input type="checkbox" class="checkbox" name="" value="false" data-id="2">
+                <div class="col-lg-1 hide">
+                    <label class="font-weight-bold">Group</label><br>
+                    <input type="checkbox" class="checkbox" name="" value="false" data-id="2">
                     <input type="hidden" class="checkboxvalue2" name="group[]" value="false">
-            	</div>
-            	<div class="col-lg-4 numid2 placement2"><input type="hidden" name="format[]"></div>
-	    		
-	    		<div class="col-lg-12 numid3">
-            		<hr>
-            	</div>
-            	<div class="col-lg-3 numid3">
-            		<div class="form-group param-elemen">
-            			<label class="font-weight-bold">Judul elemen</label>
-            			<div class="input-group">
-							<div class="input-group-prepend">
-								<button type="button" data-id="3" class="delete btn btn-danger btn-sm">X</button>
-							</div>
-	            			<input type="text" class="disabled3 form-control form-control-sm" name="judul_elemen[]" value="Alamat Lengkap">
-						</div>
-            		</div>
-            	</div>
-            	<div class="col-lg-2 numid3">
-            		<div class="form-group">
-            			<label class="font-weight-bold">Type</label>
-            			<select name="type_elemen[]" class="form-control form-control-sm selectbox" data-id="3">
-            				<option value="text">Text</option>
-            				<option selected value="textarea">Textarea</option>
-            				<option value="select_box">Select Box</option>
-            			 
-            			</select>
-            		</div>
-            	</div>
-            	<div class="col-lg-2 numid3">
-            		<div class="form-group">
-            			<label class="font-weight-bold">Lebar</label>
-            			<select name="lebar[]" class="form-control form-control-sm disabled3 "><?php 
+                </div>
+                <div class="col-lg-4 numid2 placement2"><input type="hidden" name="format[]"></div>
+                
+                <div class="col-lg-12 numid3">
+                    <hr>
+                </div>
+                <div class="col-lg-3 numid3">
+                    <div class="form-group param-elemen">
+                        <label class="font-weight-bold">Judul elemen</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button type="button" data-id="3" class="delete btn btn-danger btn-sm">X</button>
+                            </div>
+                            <input type="text" class="disabled3 form-control form-control-sm" name="judul_elemen[]" value="Alamat Lengkap">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 numid3">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Type</label>
+                        <select name="type_elemen[]" class="form-control form-control-sm selectbox" data-id="3">
+                            <option value="text">Text</option>
+                            <option selected value="textarea">Textarea</option>
+                            <option value="select_box">Select Box</option>
+                         
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2 numid3">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Lebar</label>
+                        <select name="lebar[]" class="form-control form-control-sm disabled3 "><?php 
                                 echo $rowSelects;
                             ?>
                         </select>
-            		</div>
-            	</div>
+                    </div>
+                </div>
 
-            	<div class="col-lg-1 hide">
-            		<label class="font-weight-bold">Group</label><br>
+                <div class="col-lg-1 hide">
+                    <label class="font-weight-bold">Group</label><br>
                     <input type="checkbox" class="checkbox" name="" value="false" data-id="3">
                     <input type="hidden" class="checkboxvalue3" name="group[]" value="false">
-            	</div>
-            	<div class="col-lg-4 numid3 placement3">
+                </div>
+                <div class="col-lg-4 numid3 placement3">
                     <input type="hidden" name="format[]">
-            	</div>
-	    		
-	    		<div class="col-lg-12 numid4">
-            		<hr>
-            	</div>
-            	<div class="col-lg-3 numid4">
-            		<div class="form-group param-elemen">
-            			<label class="font-weight-bold">Judul elemen</label>
-            			<div class="input-group">
-							<div class="input-group-prepend">
-								<button type="button" data-id="4" class="delete btn btn-danger btn-sm">X</button>
-							</div>
-	            			<input type="text" class="disabled4 form-control form-control-sm" name="judul_elemen[]" value="Catatan Pesanan">
-						</div>
-            		</div>
-            	</div>
-            	<div class="col-lg-2 numid4">
-            		<div class="form-group">
-            			<label class="font-weight-bold">Type</label>
-            			<select name="type_elemen[]" class="form-control form-control-sm selectbox" data-id="4">
-            				<option value="text">Text</option>
-            				<option selected value="textarea">Textarea</option>
-            				<option value="select_box">Select Box</option>
-            			
-            			</select>
-            		</div>
-            	</div>
-            	<div class="col-lg-2 numid4">
-            		<div class="form-group">
-            			<label class="font-weight-bold">Lebar</label>
-            			<select name="lebar[]" class="form-control form-control-sm disabled4 "><?php 
+                </div>
+                
+                <div class="col-lg-12 numid4">
+                    <hr>
+                </div>
+                <div class="col-lg-3 numid4">
+                    <div class="form-group param-elemen">
+                        <label class="font-weight-bold">Judul elemen</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button type="button" data-id="4" class="delete btn btn-danger btn-sm">X</button>
+                            </div>
+                            <input type="text" class="disabled4 form-control form-control-sm" name="judul_elemen[]" value="Catatan Pesanan">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 numid4">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Type</label>
+                        <select name="type_elemen[]" class="form-control form-control-sm selectbox" data-id="4">
+                            <option value="text">Text</option>
+                            <option selected value="textarea">Textarea</option>
+                            <option value="select_box">Select Box</option>
+                        
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2 numid4">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Lebar</label>
+                        <select name="lebar[]" class="form-control form-control-sm disabled4 "><?php 
                                 echo $rowSelects;
                             ?>
                         </select>
-            		</div>
-            	</div>
+                    </div>
+                </div>
 
-            	<div class="col-lg-1 hide">
-            		<label class="font-weight-bold">Group</label><br>
-            		 
+                <div class="col-lg-1 hide">
+                    <label class="font-weight-bold">Group</label><br>
+                     
                     <input type="checkbox" class="checkbox" name="" value="false" data-id="4">
                     <input type="hidden" class="checkboxvalue4" name="group[]" value="false">
-            	</div>
-            	<div class="col-lg-4 numid4 placement4">
+                </div>
+                <div class="col-lg-4 numid4 placement4">
                 <input type="hidden" name="format[]">
                 </div>
-	    		</div>
-				`);
-		});
-		$(document).on("click", ".delete" , function() {
-			$('.numid'+$(this).data('id')).remove();
-		});
-		$(document).on("change", ".selectbox" , function() {
-    		var param = $(this).val();
-			var id = $(this).data('id');
-    		if (param == 'select_box') {
-    			$('.placement'+id).html('<label class="font-weight-bold">Masukan List sesuai format</label><textarea name="format[]" placeholder="Merah&#10;Biru&#10;Hijau" rows="8" class="form-control form-control-sm" row></textarea>');
-    		}else{
-    			$('.placement'+$(this).data('id')).html('<input type="hidden" name="format[]">');
-    		}
-    	});
-    	$('#addrow').on('click', function(){
-	    	var numrow = $('.param-elemen').length + 1;
-	    	$('.add-element').append(`
-	    		<div class="col-lg-12 numid`+numrow+`">
-            		<hr>
-            	</div>
-            	<div class="col-lg-3 numid`+numrow+`">
-            		<div class="form-group param-elemen">
-            			<label class="font-weight-bold">Judul elemen</label>
-            			<div class="input-group">
-							<div class="input-group-prepend">
-								<button type="button" data-id ="`+numrow+`"class="delete btn btn-danger btn-sm">X</button>
-							</div>
-	            			<input type="text" class="disabled`+numrow+` form-control form-control-sm" name="judul_elemen[]">
-						</div>
-            		</div>
-            	</div>
-            	<div class="col-lg-2 numid`+numrow+`">
-            		<div class="form-group">
-            			<label class="font-weight-bold">Type</label>
-            			<select name="type_elemen[]" class="form-control form-control-sm selectbox" data-id=`+numrow+`>
-            				<option value="text">Text</option>
-            				<option value="textarea">Textarea</option>
-            				<option value="select_box">Select Box</option>
-            				
-            			</select>
-            		</div>
-            	</div>
-            	<div class="col-lg-2 numid`+numrow+`">
-            		<div class="form-group">
-            			<label class="font-weight-bold">Lebar</label>
-            			<select name="lebar[]" class="form-control form-control-sm disabled`+numrow+`">
-            				<?php 
-            					echo $rowSelects;
-            				?>
-            			</select>
-            		</div>
-            	</div>
+                </div>
+                `);
+        });
+        $(document).on("click", ".delete" , function() {
+            $('.numid'+$(this).data('id')).remove();
+        });
+        $(document).on("change", ".selectbox" , function() {
+            var param = $(this).val();
+            var id = $(this).data('id');
+            if (param == 'select_box') {
+                $('.placement'+id).html('<label class="font-weight-bold">Masukan List sesuai format</label><textarea name="format[]" placeholder="Merah&#10;Biru&#10;Hijau" rows="8" class="form-control form-control-sm" row></textarea>');
+            }else{
+                $('.placement'+$(this).data('id')).html('<input type="hidden" name="format[]">');
+            }
+        });
+        $('#addrow').on('click', function(){
+            var numrow = $('.param-elemen').length + 1;
+            $('.add-element').append(`
+                <div class="col-lg-12 numid`+numrow+`">
+                    <hr>
+                </div>
+                <div class="col-lg-3 numid`+numrow+`">
+                    <div class="form-group param-elemen">
+                        <label class="font-weight-bold">Judul elemen</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button type="button" data-id ="`+numrow+`"class="delete btn btn-danger btn-sm">X</button>
+                            </div>
+                            <input type="text" class="disabled`+numrow+` form-control form-control-sm" name="judul_elemen[]">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 numid`+numrow+`">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Type</label>
+                        <select name="type_elemen[]" class="form-control form-control-sm selectbox" data-id=`+numrow+`>
+                            <option value="text">Text</option>
+                            <option value="textarea">Textarea</option>
+                            <option value="select_box">Select Box</option>
+                            
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2 numid`+numrow+`">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Lebar</label>
+                        <select name="lebar[]" class="form-control form-control-sm disabled`+numrow+`">
+                            <?php 
+                                echo $rowSelects;
+                            ?>
+                        </select>
+                    </div>
+                </div>
 
-            	<div class="col-lg-1 hide">
-            		<label class="font-weight-bold">Group</label><br>
+                <div class="col-lg-1 hide">
+                    <label class="font-weight-bold">Group</label><br>
                     <input type="checkbox" class="checkbox" name="" value="false" data-id="`+numrow+`">
                     <input type="hidden" class="checkboxvalue`+numrow+`" name="group[]" value="false">
-            	</div>
-            	<div class="col-lg-4 numid`+numrow+` placement`+numrow+`">
+                </div>
+                <div class="col-lg-4 numid`+numrow+` placement`+numrow+`">
                 <input type="hidden" name="format[]">
-            	</div>
-	    		`);
-    	});
+                </div>
+                `);
+        });
         $('.ms').select2();
         $('.toplevel_page_rebiovw_list').addClass('wp-has-current-submenu');
     });
