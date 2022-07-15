@@ -22,7 +22,7 @@ function rebiovw_form_survey()
     }         
     </style>
     
-    <div style="width: 100%; padding-left: 176px">    
+    <div style="width: 100%;">    
     <div id="popup_container">    
         <div class="wrap">
 
