@@ -1,34 +1,46 @@
 <?php
 
 function rebiovw_update_lead() {
+    rebiovw_cwts();
+
     require_once(ROOTDIR . '/includes/reviovw-update-lead.php');
 }
 function rebiovw_lead() {
+    rebiovw_cwts();
+
     require_once(ROOTDIR . '/includes/reviovw-lead.php');
 }
 function rebiovw_update_form() {
+    rebiovw_cwts();
+
     require_once(ROOTDIR . '/includes/reviovw-update-form.php');
 }
 function rebiovw_list_form() {
+    rebiovw_cwts();
+
     require_once(ROOTDIR . '/includes/reviovw-list-form.php');
 }
 function rebiovw_create_form() {
+    rebiovw_cwts();
+
     require_once(ROOTDIR . '/includes/reviovw-create-form.php');
 }
 function rebiovw_panduan(){
+    rebiovw_cwts();
+
     $default_tab = null;
     $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
 ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     
     <link rel="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
-    <h3>Panduan - Dokumentasi</h3>
+    <h3>Panduan - Penjelasan</h3>
     <div class="wrap">
         <div class="row">
             <div class="col-lg-12 text-small">
                 <hr>
                 <b>Vidio Demo :</b><br>
-                <iframe width="727" height="409" src="https://www.youtube.com/embed/a9DLcPCoB_4?list=PLllzUuyi4RvzVHyoA05Em1KfpvX3xfSbu" title="❌ BAHAYA 😫 PAYLATER, KREDIT, PINJAMAN ONLINE YANG TIDAK KAMU KETAHUI | By McDani Saputra" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="100%" height="408" src="https://www.youtube.com/embed/-HPuGsaRx4M" title="Demo Preview Halaman Admin | REBI - Order Via WhatsApp" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="col-lg-12 text-small">
                 <div class="wrap">
@@ -65,6 +77,8 @@ function rebiovw_panduan(){
 <?php
 }
 function rebiovw_update_tombol() {
+    rebiovw_cwts();
+
     global $wpdb;
     $tbl_tombol = $wpdb->prefix . "rebiovw_tombol";
     if (isset($_POST['nama_tombol'])) {
@@ -147,6 +161,8 @@ if($x != 1){
     </script>';
 }
 function rebiovw_setting() {
+    rebiovw_cwts();
+
     global $wpdb;
     $tbl_setting = $wpdb->prefix . "rebiovw_setting";
 
@@ -344,6 +360,7 @@ function rebiovw_setting() {
 
 function rebiovw_list() {
     rebiovw_cwts();
+
     ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     
