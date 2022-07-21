@@ -2,6 +2,10 @@
     
     <link rel="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
     <style>
+     
+    #adminmenuwrap{
+        margin-top: 0px !important;
+    }
         .dataTables_filter, .dataTables_paginate.paging_simple_numbers{
             float: right;
         }
@@ -26,7 +30,7 @@
             $table_form = $wpdb->prefix . "rebiovw_form";
             $table_pesanan = $wpdb->prefix . "rebiovw_pesanan";
 
-            $rowsleadrebiovw = $wpdb->get_results("SELECT * from $table_pesanan group by unix order by id desc");
+            $rowsleadrebiovw = $wpdb->get_results("SELECT * from $table_pesanan group by unix order by id desc limit 500");
             ?>
             <table class='table table-border table-striped' id="example" style="width: 100%">
                 <thead>
